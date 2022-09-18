@@ -1,0 +1,20 @@
+{
+  "name": "Gohan",
+  "symbol": "gh",
+  "image": "2.png",
+  "properties": {
+    "files": [
+      {
+        "uri": "2.png",
+        "type": "image/png"
+      }
+    ],
+    "creators": [
+      {
+        "address": "EMKMUeAgvgpQTPAwrgQXY8EWtKkfHvfZbPJqq5drnBhe",
+        "share": 100
+      }
+    ]
+  },
+  "seller_fee_basis_points": 500
+}

@@ -38,7 +38,7 @@ export async function sendTransactionsWithManualRetry(
   wallet,
   instructions,
   signers,
-){
+) {
   let stopPoint = 0;
   let tries = 0;
   let lastInstructionsLength = null;
@@ -107,7 +107,7 @@ export const sendTransactions = async (
   signersSet,
   sequenceType = 'Parallel',
   commitment = 'singleGossip',
-  successCallback = (txid, ind) => {},
+  successCallback = (txid, ind) => { },
   failCallback = (txid, ind) => false,
   block,
 ) => {
@@ -145,7 +145,7 @@ export const sendTransactions = async (
 
   const signedTxns = await wallet.signAllTransactions(unsignedTxns);
 
-  const pendingTxns= [];
+  const pendingTxns = [];
 
   let breakEarlyObject = { breakEarly: false, i: 0 };
   console.log(
@@ -243,6 +243,7 @@ export const sendTransaction = async (
   let slot = 0;
 
   if (awaitConfirmation) {
+    console.log('awaitTransactionSignatureConfirmation', txid);
     const confirmation = await awaitTransactionSignatureConfirmation(
       txid,
       DEFAULT_TIMEOUT,
@@ -345,6 +346,7 @@ export async function sendSignedTransaction({
     }
   })();
   try {
+    console.log('sendSignedTransaction', txid);
     const confirmation = await awaitTransactionSignatureConfirmation(
       txid,
       timeout,
@@ -372,7 +374,7 @@ export async function sendSignedTransaction({
       simulateResult = (
         await simulateTransaction(connection, signedTransaction, 'single')
       ).value;
-    } catch (e) {}
+    } catch (e) { }
     if (simulateResult && simulateResult.err) {
       if (simulateResult.logs) {
         for (let i = simulateResult.logs.length - 1; i >= 0; --i) {
@@ -427,7 +429,7 @@ async function awaitTransactionSignatureConfirmation(
   connection,
   commitment = 'recent',
   queryStatus = false,
-){
+) {
   let done = false;
   let status = {
     slot: 0,
@@ -469,13 +471,20 @@ async function awaitTransactionSignatureConfirmation(
       console.error('WS error in setup', txid, e);
     }
     while (!done && queryStatus) {
+
       // eslint-disable-next-line no-loop-func
       (async () => {
         try {
+          console.log('signatureStatuses', txid);
+
           const signatureStatuses = await connection.getSignatureStatuses([
-            txid,
-          ]);
+            txid
+          ], {
+            searchTransactionHistory: true,
+          });
+          console.log(signatureStatuses)
           status = signatureStatuses && signatureStatuses.value[0];
+
           if (!done) {
             if (!status) {
               console.log('REST null result for', txid, status);

@@ -1,0 +1,20 @@
+{
+  "name": "Vegeta",
+  "symbol": "v",
+  "image": "1.png",
+  "properties": {
+    "files": [
+      {
+        "uri": "1.png",
+        "type": "image/png"
+      }
+    ],
+    "creators": [
+      {
+        "address": "EMKMUeAgvgpQTPAwrgQXY8EWtKkfHvfZbPJqq5drnBhe",
+        "share": 100
+      }
+    ]
+  },
+  "seller_fee_basis_points": 500
+}
